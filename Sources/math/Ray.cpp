@@ -1,26 +1,26 @@
 //
-//  Ray.hpp
+//  Ray.cpp
 //  Ray_tracing
 //
 //
 
-#ifndef Ray_hpp
-#define Ray_hpp
-#pragma once
-#include "Point.hpp"
-#include "Vec.hpp"
-namespace math {
-    struct Ray {
-        
-        Point origin;
-        Vec direction;
-        
-        Ray(Point origin_,Vec direction_);
-        Ray(Point A,Point B);
-        
-        //Ray& reflected(const Intersertion& intersec);
+#include "Ray.hpp"
 
-    };
+math::Ray::Ray(Point origin_, Vec direction_)
+{
+    origin=origin_;
+    direction=direction_;
 }
 
-#endif /* Ray_hpp */
+math::Ray::Ray(Point A, Point B)
+{
+    origin=A;
+    Vec dir;
+    dir.x=B.x-A.x;
+    dir.y=B.y-A.y;
+    dir.z=B.z-A.z;
+    dir.normalize();
+    direction=dir;
+    
+}
+
