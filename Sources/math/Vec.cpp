@@ -1,5 +1,39 @@
-#include "math/Vec.hpp"
+//
+//  Vec.cpp
+//  Ray_tracing
+//
+//
 
-namespace math {
-	
+#include "Vec.hpp"
+#include<cmath>
+
+float math::Vec::dot(const Vec &rhs) const
+{
+    return x*rhs.x+y*rhs.y+z*rhs.z;
+}
+
+float math::Vec::lenght_sq() const
+{
+    return x*x+y*y+z*z;
+}
+
+float math::Vec::lenght() const
+{
+    return std::sqrt(x*x+y*y+z*z);
+}
+
+void math::Vec::normalize()
+{
+    float norm=std::sqrt(x*x+y*y+z*z);
+    x=x/norm;
+    y=y/norm;
+    z=z/norm;
+}
+
+math::Vec math::Vec::normalized() const
+{
+    math::Vec Vec_n;
+    Vec_n={x,y,z};
+    Vec_n.normalize();
+    return Vec_n;
 }
