@@ -4,8 +4,8 @@
 //
 //
 
-#include "Vec.hpp"
-#include<cmath>
+#include "math/Vec.hpp"
+#include <cmath>
 
 float math::Vec::dot(const Vec &rhs) const
 {
