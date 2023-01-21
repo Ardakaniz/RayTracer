@@ -4,7 +4,7 @@ SRC_FILES = $(shell find $(SRC_DIR) -type f -name '*.cpp')
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
 CC = g++
-FLAGS = -Wall -Wpedantic -ISources
+FLAGS = -Wall -Wpedantic -I$(SRC_DIR)
 OUT = raytracer
 LDFLAGS = -lsfml-graphics
 
@@ -15,5 +15,5 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) $(FLAGS) -std=c++17 -c -o $@ $<
 
 clean:
-	@find obj -type f -delete
-	@rm raytracer
+	@find $(OBJ_DIR) -type f -delete
+	@rm $(OUT)
