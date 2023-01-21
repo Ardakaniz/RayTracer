@@ -12,7 +12,7 @@
 class Object {
     
     std::optional<Intersection> intersection(const math::Ray& ray);
-    Vec normal(const Point& pt);
+    Vec get_normal_at(const Point& pt);
 };
 
 
