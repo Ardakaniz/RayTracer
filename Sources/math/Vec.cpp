@@ -12,12 +12,12 @@ float math::Vec::dot(const Vec &rhs) const
     return x*rhs.x+y*rhs.y+z*rhs.z;
 }
 
-float math::Vec::lenght_sq() const
+float math::Vec::length_sq() const
 {
     return x*x+y*y+z*z;
 }
 
-float math::Vec::lenght() const
+float math::Vec::length() const
 {
     return std::sqrt(x*x+y*y+z*z);
 }

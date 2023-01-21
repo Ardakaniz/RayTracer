@@ -14,8 +14,8 @@ namespace math {
         float z;
         
         float dot(const Vec& rhs) const;
-        float lenght_sq() const;
-        float lenght() const;
+        float length_sq() const;
+        float length() const;
         void normalize();
         Vec normalized() const;
         
