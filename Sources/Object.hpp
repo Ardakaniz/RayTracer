@@ -15,8 +15,8 @@
 
 class Object {
 public:
-    std::optional<Intersection> intersection(const math::Ray& ray);
-    Vec get_normal_at(const Point& pt);    
+    std::optional<math::Intersection> intersection(const math::Ray& ray);
+    math::Vec get_normal_at(const math::Point& pt);    
 };
 
 
