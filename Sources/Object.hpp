@@ -15,9 +15,10 @@
 
 class Object {
 public:
-    std::optional<Intersection> intersection(const math::Ray& ray);
-    Vec get_normal_at(const Point& pt);    
-};
+    virtual ~Object() = default;
 
+    virtual std::optional<math::Intersection> intersection(const math::Ray& ray) = 0;
+    virtual math::Vec get_normal_at(const math::Point& pt) = 0;
+};
 
 #endif /* Object_hpp */
