@@ -8,11 +8,11 @@ namespace math {
 class Sphere : public Object {
     
 public:
-    Point Center;
+    Point _pos;
     float Radius;
     
-    Sphere(Point Center, float Radius);
-    Sphere(Point Center, Point B);
+    Sphere(Point pos, float Radius);
+    Sphere(Point pos, Point B);
     
     std::optional<Intersection> intersection(const Ray& ray) override;
     

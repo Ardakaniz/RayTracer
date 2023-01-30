@@ -3,17 +3,17 @@
 
 namespace math {
 
-Sphere::Sphere(Point Center_, float Radius_)
+Sphere::Sphere(Point pos, float Radius_)
 {
-    Center=Center_;
+    _pos=pos;
     Radius=Radius_;
 }
 
-Sphere::Sphere(Point Center_,math::Point B)
+Sphere::Sphere(Point pos,math::Point B)
 {
-    Center=Center_;
+    _pos=pos;
     Vec AB;
-    AB={B.x-Center_.x,B.y-Center_.y,B.z-Center_.z};
+    AB={B.x-pos.x,B.y-pos.y,B.z-pos.z};
     Radius=AB.length();
 }
 
@@ -21,25 +21,27 @@ std::optional<Intersection> Sphere::intersection(const Ray& ray)
 {
     Intersection Inters;
     Vec CA;
-    CA.x=Ray.origin.x-Center.x;
-    CA.y=Ray.origin.y-Center.y;
-    CA.z=Ray.origin.z-Center.z;
+    CA.x=ray.origin.x-_pos.x;
+    CA.y=ray.origin.y-_pos.y;
+    CA.z=ray.origin.z-_pos.z;
+    Point A;
+    A=ray.origin;
     float CA2=CA.length_sq();
     const Vec u;
-    u=Ray.direrction;
+    u=ray.direction;
     
-    float delta=4*u.dot(CA)*u.dot(CA)-4*(CA2-Radius*Radius)
+    float delta=4*u.dot(CA)*u.dot(CA)-4*(CA2-Radius*Radius);
     
     if (delta<0)
     {
         return std::nullopt_t;
         
     }
-
+    
     else
     {
-        tp= ( -2*u.dot(CA)+std::sqrt(delta) )/2
-        tm= ( -2*u.dot(CA)-std::sqrt(delta) )/2
+        float tp= ( -2*u.dot(CA)+std::sqrt(delta) )/2;
+        float tm= ( -2*u.dot(CA)-std::sqrt(delta) )/2;
         Point TP;
         TP=A.translate(tp*u);
         Vec ATP={TP.x-A.x,TP.y-A.y,TP.z-A.z};
@@ -71,8 +73,8 @@ std::optional<Intersection> Sphere::intersection(const Ray& ray)
 Vec Sphere::get_normal_at(const Point& pt)
 {
     Vec n;
-    n={pt.x-Center.x,pt.y-Center.y,pt.z-Center.z};
-    n.normalized()
+    n={pt.x-_pos.x,pt.y-_pos.y,pt.z-_pos.z};
+    n.normalized();
     return n;
     
 }
