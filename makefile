@@ -14,6 +14,9 @@ raytracer: $(OBJ_FILES)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) $(FLAGS) -std=c++17 -c -o $@ $<
 
+run: $(OUT)
+	./$(OUT)
+
 clean:
 	@find $(OBJ_DIR) -type f -delete
 	@rm $(OUT)
