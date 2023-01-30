@@ -66,4 +66,15 @@ std::optional<Intersection> Sphere::intersection(const Ray& ray)
     }
 }
 
+
+
+Vec Sphere::get_normal_at(const Point& pt)
+{
+    Vec n;
+    n={pt.x-Center.x,pt.y-Center.y,pt.z-Center.z};
+    n.normalized()
+    return n;
+    
+}
+
 }

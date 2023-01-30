@@ -16,7 +16,7 @@ public:
     
     std::optional<Intersection> intersection(const Ray& ray) override;
     
-    Vec get_normal_at(const math::Point& pt);
+    Vec get_normal_at(const Point& pt);
     
 };
 
