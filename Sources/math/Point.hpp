@@ -8,6 +8,8 @@
 #define Point_hpp
 #pragma once
 
+#include "math/Vec.hpp"
+
 namespace math {
     struct Vec;
     
@@ -17,6 +19,13 @@ namespace math {
         float z;
         
         Point& translate(const Vec& vec);
+        Vec to_vec() const;
     };
+
+    Point operator+(const Point& lhs, const Point& rhs);
+    Point operator-(const Point& lhs, const Point& rhs);
+
+    Point& operator+=(Point& lhs, const Point& rhs);
+    Point& operator-=(Point& lhs, const Point& rhs);
 }
 #endif /* Point_hpp */
