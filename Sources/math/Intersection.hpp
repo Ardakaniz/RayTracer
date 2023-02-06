@@ -11,8 +11,8 @@ namespace math {
         Point point;
 
         // Intersection between the `ray` and an `object`
-        Object& obj;
-        Ray& ray;
+        const Object& obj;
+        const Ray& ray;
 
         // Distance between the ray origin and point
         float distance;
