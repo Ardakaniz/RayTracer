@@ -17,6 +17,13 @@ class Scene {
 public:
     Scene(math::Color background_color = math::BLACK);
 
+    template<class T, class... Args>
+    void add_object(const math::Point& pos, Args&&... args)
+    { _objects.emplace_back(std::make_unique<T>(pos, std::forward<Args>(args)...)); }
+
+    void add_light(const Light& light)
+    { _lights.push_back(light); }
+
     std::optional<math::Intersection> get_closest_intersection(const math::Ray& ray) const;
     
     // Returns wether the point 'a' is visible from 'b' (ie no objects in between)

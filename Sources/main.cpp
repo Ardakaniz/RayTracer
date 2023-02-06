@@ -5,10 +5,14 @@
 #include "Scene.hpp"
 #include "Renderer.hpp"
 
+#include "objects/Sphere.hpp"
+
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
-    Scene scene{ math::BLUE };
+    Scene scene{ math::BLACK };
+    scene.add_object<math::Sphere>(math::Point{ 0., 0., -20. }, 5.);
+    scene.add_light(Light{ math::Point{10., 10., 10.}, math::RED });
 
     CameraParams params{
         .width = 800,
