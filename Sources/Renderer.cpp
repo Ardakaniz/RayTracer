@@ -22,18 +22,21 @@ void Renderer::render() {
     for (unsigned int x{ 0 }; x < width; ++x) {
         for (unsigned int y{ 0 }; y < height; ++y) {
             // We create the ray from the observer to the projection of the px (x,y) to the world
-            const math::Ray view_ray = _camera.cast_ray(x, y);
+            const math::Ray view_ray{ _camera.cast_ray(x, y) };
 
             // We check if this ray intersect anything (if not, the background color will be rendered)
-            std::optional<math::Intersection> intersec = _scene.get_closest_intersection(view_ray);
+            const std::optional<math::Intersection> intersec{ _scene.get_closest_intersection(view_ray) };
             if (intersec) {
-                math::Color px_color = _scene.get_background_color();
+                math::Color px_color{ _scene.get_background_color() };
+                const math::Vec normal{ intersec->obj.get_normal_at(intersec->point) };
 
                 // If there is an intersection, we diffuse every light sources visible from the intersected object onto it 
-                /*for (const Light& light : _scene.get_lights()) {
-                    if (intersec->obj.visible_from(light.pos))
-                        px_color += intersec->obj.get_diffuse_color(light);
-                }*/
+                for (const Light& light : _scene.get_lights()) {
+                    const math::Vec light_to_intersec{ (light.pos - intersec->point).to_vec() };
+
+                    if (normal.dot(light_to_intersec) > 0 && _scene.is_visible_from(intersec->point, light.pos))
+                        px_color += intersec->obj.get_diffuse_color(light, intersec->point);
+                }
                 
                 _image[x + y * width] = px_color.clipped(); // We clip the color between 
             }
