@@ -11,6 +11,7 @@ class Renderer {
 public:
 	Renderer(Scene& scene, Camera& camera);
 
+	void render();
 	bool save_to_file(const std::string& filepath) const;
 
 private:

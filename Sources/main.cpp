@@ -19,6 +19,7 @@ int main() {
     Camera camera{ params };
 
     Renderer renderer{ scene, camera };
+    renderer.render();
     if (!renderer.save_to_file("image.png")) {
         return -1;
     }
