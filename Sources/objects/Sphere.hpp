@@ -3,23 +3,22 @@
 #include "Object.hpp"
 
 
-namespace math {
+
 
 class Sphere : public Object {
     
 public:
-    Point _pos;
     float Radius;
     
-    Sphere(Point pos, float Radius);
-    Sphere(Point pos, Point B);
+    Sphere(math::Point pos, float Radius_,const math::Color& diffuse_color);
+    Sphere(math::Point pos, math::Point B,const math::Color& diffuse_color);
     
-    std::optional<Intersection> intersection(const Ray& ray) override;
+    std::optional<math::Intersection> intersection(const math::Ray& ray) const override;
     
-    Vec get_normal_at(const Point& pt);
+    math::Vec get_normal_at(const math::Point& pt) const override;
     
 };
 
-}
+
 
 
