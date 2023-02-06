@@ -3,9 +3,10 @@
 #include "math/Point.hpp"
 
 class Object;
-class Ray;
 
 namespace math {
+    class Ray;
+
     struct Intersection {
         // Intersection point
         Point point;

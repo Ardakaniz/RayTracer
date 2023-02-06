@@ -1,4 +1,5 @@
 #include "objects/Sphere.hpp"
+#include "math/Ray.hpp"
 
 
 
@@ -17,7 +18,7 @@ Object(pos,diffuse_color)
 
 std::optional<math::Intersection> Sphere::intersection(const math::Ray& ray) const 
 {
-    math::Vec CA={ray.origin.x-_pos.x,ray.origin.y-_pos.y,CA.z=ray.origin.z-_pos.z};
+    math::Vec CA={ ray.origin.x - _pos.x, ray.origin.y - _pos.y, ray.origin.z - _pos.z};
     math::Point A=ray.origin;
     float CA2=CA.length_sq();
     math::Vec u=ray.direction;
