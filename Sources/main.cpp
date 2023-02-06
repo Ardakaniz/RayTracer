@@ -9,7 +9,14 @@ int main() {
     std::cout << "Hello, World!" << std::endl;
 
     Scene scene{ math::BLUE };
-    Camera camera{ 1920, 1080 };
+
+    CameraParams params{
+        .width = 800,
+        .height = 600,
+        .fov_angle = 3.141592 / 6.,
+        .position = { 0., 0., 2. }
+    };
+    Camera camera{ params };
 
     Renderer renderer{ scene, camera };
     if (!renderer.save_to_file("image.png")) {
