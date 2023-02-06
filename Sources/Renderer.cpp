@@ -32,10 +32,14 @@ void Renderer::render() {
 
                 // If there is an intersection, we diffuse every light sources visible from the intersected object onto it 
                 for (const Light& light : _scene.get_lights()) {
-                    const math::Vec light_to_intersec{ (light.pos - intersec->point).to_vec() };
+                    const math::Vec light_to_intersec{ (intersec->point - light.pos).to_vec() };
 
-                    if (normal.dot(light_to_intersec) > 0 && _scene.is_visible_from(intersec->point, light.pos))
+                    const bool above{ normal.dot(light_to_intersec) > 0 };
+                    const bool visible{ _scene.is_visible_from(intersec->point, light.pos) };
+
+                    if (above && visible) {
                         px_color += intersec->obj.get_diffuse_color(light, intersec->point);
+                    }
                 }
                 
                 _image[x + y * width] = px_color.clipped(); // We clip the color between 

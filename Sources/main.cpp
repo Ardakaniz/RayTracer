@@ -8,19 +8,21 @@
 #include "objects/Sphere.hpp"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-
     Scene scene{ math::BLACK };
-    scene.add_object<math::Sphere>(math::Point{ 0., 0., -20. }, 5.);
-    scene.add_light(Light{ math::Point{10., 10., 10.}, math::RED });
+    scene.add_object<Sphere>(math::Point{ 0., 0., -5. }, 1.f, math::WHITE);
+    scene.add_light(Light{ math::Point{50., 0., -50.}, math::GREEN });
 
     CameraParams params{
         .width = 800,
-        .height = 600,
+        .height = 800,
         .fov_angle = 3.141592 / 6.,
-        .position = { 0., 0., 2. }
+        .position = { 1., 1., 3. }
     };
     Camera camera{ params };
+
+    std::cout << "--- Camera params ---" << std::endl;
+    std::cout << "Output width x height: " << camera.get_width() << "x" << camera.get_height() << std::endl;
+    std::cout << "Viewport width / height: " << camera.get_viewport_width() << " / " << camera.get_viewport_height() << std::endl; 
 
     Renderer renderer{ scene, camera };
     renderer.render();

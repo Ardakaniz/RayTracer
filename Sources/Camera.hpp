@@ -30,6 +30,12 @@ public:
 	inline unsigned int get_height() const
 	{ return _params.height; }
 
+	inline float get_viewport_width() const
+	{ return _viewport_width; }
+
+	inline float get_viewport_height() const
+	{ return _viewport_height; }
+
 private:
 	const CameraParams _params;
 

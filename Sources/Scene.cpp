@@ -9,7 +9,7 @@ Scene::Scene(math::Color background_color) :
 { }
 
 std::optional<math::Intersection> Scene::get_closest_intersection(const math::Ray& ray) const {
-    float min_dist{};
+    float min_dist{ std::numeric_limits<float>::max() };
     std::optional<math::Intersection> closest_intersec{ std::nullopt };
 
     for (const auto& obj : _objects) {

@@ -33,16 +33,21 @@ std::optional<math::Intersection> Sphere::intersection(const math::Ray& ray) con
     
     else
     {
-        float tm= ( -2*u.dot(CA)-std::sqrt(delta) )/2;
-        math::Point TM=A.translate(tm*u);
-        return math::Intersection {TM,*this,ray,tm};
+        const float tm = ( -2*u.dot(CA)-std::sqrt(delta) )/2;
+        
+        // If we intercepted behind us, we didnt actually intercepted 
+        if (tm < 0.)
+            return std::nullopt;
+        
+        const math::Point TM=A.translate(tm*u);
+        return math::Intersection{TM, *this, ray,tm};
     }
 }
 
 math::Vec Sphere::get_normal_at(const math::Point& pt) const
 {
     math::Vec n={pt.x-_pos.x,pt.y-_pos.y,pt.z-_pos.z};
-    n.normalized();
+    n.normalize();
     return n;
     
 }
