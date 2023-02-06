@@ -9,30 +9,27 @@
 #pragma once
 
 #include "math/Color.hpp"
-#include "math/Ray.hpp"
-#include "math/Point.hpp"
 #include "math/Vec.hpp"
-
+#include "Light.hpp"
+#include "math/Intersection.hpp"
 #include <optional>
+#include <cmath>
+namespace math {
+struct Point;
+struct Ray;
+}
 
 class Object {
 public:
-    Object(const math::Vec& pos, const math::Color& diffuse_color = math::WHITE);
+    Object(const math::Point& pos, const math::Color& diffuse_color);
     virtual ~Object() = default;
 
-    virtual std::optional<math::Intersection> intersection(const math::Ray& ray) = 0;
-    virtual math::Vec get_normal_at(const math::Point& pt) = 0;
+    virtual std::optional<math::Intersection>  intersection(const math::Ray& ray) const = 0;
+    virtual math::Vec get_normal_at(const math::Point& pt) const  = 0 ;
+    math::Color get_diffuse_color(const Light& light,const math::Point& P) const ;
 
-    /*
-        ray: de light.pos -> this._pos
-        Cs: light.color
-        N: this.get_normal_at(this.intersection(ray))
-        kd: _diffuse_color
-    */
-    math::Color get_diffuse_color(const Light& light);
-
-private:
-    const math::Vec _pos;
+protected:
+    const math::Point _pos;
     const math::Color _diffuse_color;
 };
 
