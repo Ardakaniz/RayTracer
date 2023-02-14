@@ -9,14 +9,13 @@
 
 int main() {
     Scene scene{ math::BLACK };
-    scene.add_object<Sphere>(math::Point{ 0., 0., -5. }, 1.f, math::WHITE);
-    scene.add_light(Light{ math::Point{50., 0., -50.}, math::GREEN });
+    scene.add_object<Sphere>(math::Point{ 0., 0., -20. }, 5.f, math::WHITE);
 
     CameraParams params{
         .width = 800,
         .height = 800,
         .fov_angle = 3.141592 / 6.,
-        .position = { 1., 1., 3. }
+        .position = { 0., 0., 20. }
     };
     Camera camera{ params };
 

@@ -34,8 +34,8 @@ void Renderer::render() {
                 for (const Light& light : _scene.get_lights()) {
                     const math::Vec light_to_intersec{ (intersec->point - light.pos).to_vec() };
 
-                    const bool above{ normal.dot(light_to_intersec) > 0 };
-                    const bool visible{ _scene.is_visible_from(intersec->point, light.pos) };
+                    const bool above{ normal.dot(light_to_intersec) < 0 };
+                    const bool visible{ _scene.is_visible_from(light.pos, intersec->point) };
 
                     if (above && visible) {
                         px_color += intersec->obj.get_diffuse_color(light, intersec->point);
