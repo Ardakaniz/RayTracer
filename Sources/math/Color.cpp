@@ -2,7 +2,7 @@
 #include <algorithm>
 
 namespace math {
-	Color Color::clipped() const {
+	Color Color::clamped() const {
 		return Color{
 			.r = std::min(1.f, std::max(0.f, r)),
 			.g = std::min(1.f, std::max(0.f, g)),
