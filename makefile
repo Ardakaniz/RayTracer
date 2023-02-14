@@ -14,8 +14,9 @@ raytracer: $(OBJ_FILES)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) $(FLAGS) -std=c++20 -c -o $@ $<
 
-run: $(OUT)
+r: $(OUT)
 	./$(OUT)
+	open image.png
 
 clean:
 	@find $(OBJ_DIR) -type f -delete
