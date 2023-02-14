@@ -42,7 +42,7 @@ void Renderer::render() {
                     }
                 }
                 
-                _image[x + y * width] = px_color.clipped(); // We clip the color between 
+                _image[x + y * width] = px_color.clamped(); // We clamp the color between 
             }
         }
     }
