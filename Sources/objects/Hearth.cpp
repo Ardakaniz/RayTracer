@@ -19,7 +19,8 @@ float Hearth::f(math::Point M)
 
 float Hearth::f_t(const math::Ray &ray,float t)
 {
-    return f( (ray.origin-_pos).translate(t*ray.direction) );
+    math::Point M_t=ray.origin;
+    return f( M_t.translate(t*ray.direction) );
 }
 float Hearth::f_tp(const math::Ray &ray, float t)
 {
