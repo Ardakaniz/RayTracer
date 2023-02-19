@@ -17,17 +17,16 @@ public:
     float d; // d>0, overall size
     // (x^2+a^2+z^2-1)^3-c.x^2.z^3-b.y^2.z^3=0 parametric equation
     
-    
-    Hearth(math::Point pos, float a_,float b_, float c_, float d_,const math::Color& diffuse_color = math::WHITE);
-    
-    float f(math::Point M); // parametric equation
-    float f_t(const math::Ray &ray ,float t); //  f_t=0 equation to solve to find intersection
-    float f_tp(const math::Ray &ray,float t); // its derivative to compute zero with Newton algorithm
-    
+    Hearth(const math::Point& pos, float a_,float b_, float c_, float d_,const math::Color& diffuse_color = math::WHITE);
     
     
     std::optional<math::Intersection> intersection(const math::Ray& ray) const override ;
     
     math::Vec get_normal_at(const math::Point& pt) const override;
+
+private:
+    float f(const math::Point& M) const; // parametric equation
+    float f_t(const math::Ray &ray ,float t) const; //  f_t=0 equation to solve to find intersection
+    float f_tp(const math::Ray &ray,float t) const; // its derivative to compute zero with Newton algorithm
 };
 #endif /* Hearth_hpp */
