@@ -11,9 +11,44 @@ d(d_)
 {}
 
 std::optional<math::Intersection> Hearth::intersection(const math::Ray& ray) const {
+    // Wont work for now, we should add a circumscribed circle to first roughly
+    // compute if there is intersection or not 
 
+    // How best to choose these values?
+    constexpr float COARSE_DT = 1.;
+    constexpr float EPS = 1e-3;
+    constexpr unsigned int MAX_ITER = 100;
+    
+    float t{ 0. };
+    unsigned int iter_count{ 0 };
+    const bool initial_sign{ f_t(ray, t) < 0 };
 
-    return std::nullopt;
+    while ((f_t(ray, t) < 0) == initial_sign && iter_count < MAX_ITER) {
+        ++iter_count;
+        t += COARSE_DT;
+    }
+
+    if (iter_count == MAX_ITER)
+        return std::nullopt;
+
+    float lower_t{ t - COARSE_DT }, higher_t{ t };
+    while (higher_t - lower_t > EPS && iter_count < MAX_ITER) {
+        t = (higher_t - lower_t) / 2.;
+
+        if ((f_t(ray, t) < 0) == initial_sign)
+            lower_t = t;
+        else
+            higher_t = t;
+
+        ++iter_count;
+    }
+
+    return math::Intersection{
+        .point = ray.point_at(t),
+        .obj = *this,
+        .ray = ray,
+        .distance = t
+    };
 }
 
 math::Vec Hearth::get_normal_at(const math::Point& pt) const
