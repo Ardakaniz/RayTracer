@@ -21,6 +21,7 @@ namespace math {
         Ray(Point origin_, Vec direction_);
         Ray(Point A, Point B);
         
+        Point point_at(float t) const;
         Ray reflected(const Intersection& intersec) const;
     };
 }

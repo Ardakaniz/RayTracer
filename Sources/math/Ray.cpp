@@ -18,6 +18,10 @@ namespace math {
         direction=dir;
     }
 
+    Point Ray::point_at(float t) const {
+        return origin.translated(direction * t);
+    }
+
     Ray Ray::reflected(const Intersection& intersec) const {        
         const Vec normal{ intersec.obj.get_normal_at(intersec.point) };
         const Vec dir = Vec{ intersec.ray.direction - 2.f * normal.dot(intersec.ray.direction) * normal }.normalized(); 
