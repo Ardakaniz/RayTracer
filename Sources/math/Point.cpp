@@ -10,6 +10,10 @@ namespace math {
         return *this;
     }
 
+    Point Point::translated(const Vec& vec) const {
+        return { x + vec.x, y + vec.y, z + vec.z };
+    }
+
     Vec Point::to_vec() const {
         return { x, y, z };
     }

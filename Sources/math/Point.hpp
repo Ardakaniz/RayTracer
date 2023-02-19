@@ -19,6 +19,8 @@ namespace math {
         float z;
         
         Point& translate(const Vec& vec);
+        Point translated(const Vec& vec) const;
+
         Vec to_vec() const;
     };
 
