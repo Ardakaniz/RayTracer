@@ -5,7 +5,7 @@
 class Object;
 
 namespace math {
-    class Ray;
+    struct Ray;
 
     struct Intersection {
         // Intersection point
