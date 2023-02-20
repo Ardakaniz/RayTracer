@@ -33,7 +33,7 @@ bool Scene::is_visible_from(const math::Point& a, const math::Point& b) const {
         const std::optional<math::Intersection> intersec{ obj->intersection(ray) };
 
         // If the intersection distance is smaller than (a to b) dist, then it is not visible
-        if (intersec && intersec->distance * intersec->distance < dist_sq)
+        if (intersec && intersec->distance * intersec->distance < dist_sq - 1)
             return false;
     }
 
