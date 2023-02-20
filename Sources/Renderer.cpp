@@ -27,7 +27,7 @@ void Renderer::render() {
             // We check if this ray intersect anything (if not, the background color will be rendered)
             const std::optional<math::Intersection> intersec{ _scene.get_closest_intersection(view_ray) };
             if (intersec) {
-                math::Color px_color{ _scene.get_background_color() };
+                math::Color px_color{ math::BLACK };
                 const math::Vec normal{ intersec->obj.get_normal_at(intersec->point) };
 
                 // If there is an intersection, we diffuse every light sources visible from the intersected object onto it 
