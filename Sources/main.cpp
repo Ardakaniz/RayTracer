@@ -1,4 +1,5 @@
 #include <iostream>
+#include <chrono>
 
 #include "math/Color.hpp"
 #include "Camera.hpp"
@@ -28,7 +29,12 @@ int main() {
     std::cout << "Viewport width / height: " << camera.get_viewport_width() << " / " << camera.get_viewport_height() << std::endl; 
 
     Renderer renderer{ scene, camera };
+
+    const auto start{ std::chrono::steady_clock::now() };
     renderer.render();
+    const auto end{ std::chrono::steady_clock::now() };
+    std::cout << "Render took " << std::chrono::duration<float>(end - start).count() << "s." << std::endl;
+
     if (!renderer.save_to_file("image.png")) {
         return -1;
     }
