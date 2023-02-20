@@ -1,14 +1,15 @@
 
-#ifndef Hearth_hpp
-#define Hearth_hpp
+#ifndef Heart_hpp
+#define Heart_hpp
 
 #include "Object.hpp"
 #include "math/Point.hpp"
 #include "math/Ray.hpp"
 #include "math/Vec.hpp"
 
-class Hearth : public Object {
-    
+#include "objects/Sphere.hpp"
+
+class Heart : public Object {
 public:
     float a; // width of the hearth a>0
     float b; // inclination pf the heart's lobes
@@ -17,7 +18,7 @@ public:
     float d; // d>0, overall size
     // (x^2+a^2+z^2-1)^3-c.x^2.z^3-b.y^2.z^3=0 parametric equation
     
-    Hearth(const math::Point& pos, float a_,float b_, float c_, float d_,const math::Color& diffuse_color = math::WHITE);
+    Heart(const math::Point& pos, float a_,float b_, float c_, float d_,const math::Color& diffuse_color = math::WHITE);
     
     
     std::optional<math::Intersection> intersection(const math::Ray& ray) const override ;
@@ -28,5 +29,7 @@ private:
     float f(const math::Point& M) const; // parametric equation
     float f_t(const math::Ray &ray ,float t) const; //  f_t=0 equation to solve to find intersection
     float f_tp(const math::Ray &ray,float t) const; // its derivative to compute zero with Newton algorithm
+
+    Sphere _sphere;
 };
-#endif /* Hearth_hpp */
+#endif /* Heart_hpp */
