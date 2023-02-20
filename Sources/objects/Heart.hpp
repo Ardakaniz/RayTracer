@@ -11,13 +11,12 @@
 
 class Heart : public Object {
 public:
-    float a; // width of the hearth a>0
+    float a; // width of the heart a>0
     float b; // inclination pf the heart's lobes
     float c; // inclination pf the heart's lobes,  increasing c imply lobes get more split
-    // b/c have almost the same role, the bigest one give the orientation by its sign.  positive imply up (ie the peak is botside)
+    // b,c have almost the same role, the bigest one give the orientation by its sign.  positive imply up (ie the peak is botside) b,c must satisfy (|b/c|>1/10 or |c/b|>1/10) to look like a heart
     float d; // d>0, overall size
-    // (x^2+a^2+z^2-1)^3-c.x^2.z^3-b.y^2.z^3=0 parametric equation
-    
+    // (x^2+y^2+az^2-d)^3-c.x^2.y^3-b.z^2.y^3=0
     Heart(const math::Point& pos, float a_,float b_, float c_, float d_,const math::Color& diffuse_color = math::WHITE);
     
     
