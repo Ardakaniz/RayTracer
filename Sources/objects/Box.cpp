@@ -23,9 +23,9 @@ std::optional<math::Intersection> Box::intersection(const math::Ray& ray) const 
 math::Vec Box::get_normal_at(const math::Point &pt) const
 {
     //we will compute here grad(f) at pt
-    const float df_x=6*pt.x*pt.x*pt.x*pt.x*pt.x/(a*a*a*a*a*a);
-    const float df_y=6*pt.y*pt.y*pt.y*pt.y*pt.y/(b*b*b*b*b*b);
-    const float df_z=6*pt.z*pt.z*pt.z*pt.z*pt.z/(c*c*c*c*c*c);
+    const float df_x=6*(pt.x - _pos.x)*(pt.x - _pos.x)*(pt.x - _pos.x)*(pt.x - _pos.x)*(pt.x - _pos.x)/(a*a*a*a*a*a);
+    const float df_y=6*(pt.y - _pos.y)*(pt.y - _pos.y)*(pt.y - _pos.y)*(pt.y - _pos.y)*(pt.y - _pos.y)/(b*b*b*b*b*b);
+    const float df_z=6*(pt.z - _pos.z)*(pt.z - _pos.z)*(pt.z - _pos.z)*(pt.z - _pos.z)*(pt.z - _pos.z)/(c*c*c*c*c*c);
     math::Vec n={df_x,df_y,df_z};
     n.normalize();
     return n;
