@@ -10,43 +10,43 @@ namespace utils {
 		if (!coarse_intersec)
         return std::nullopt;
 
-    // How best to choose these values?
-    constexpr float COARSE_DT = 0.1;
-    constexpr float EPS = 1e-3;
-    constexpr unsigned int MAX_ITER = 1000;
-    
-    float t{ coarse_intersec->distance };
-    unsigned int iter_count{ 0 };
-    const bool initial_sign{ f(ray, t) < 0 };
+        // How best to choose these values?
+        constexpr float COARSE_DT = 0.1;
+        constexpr float EPS = 1e-3;
+        constexpr unsigned int MAX_ITER = 100;
+        
+        float t{ coarse_intersec->distance };
+        unsigned int iter_count{ 0 };
+        const bool initial_sign{ f(ray, t) < 0 };
 
-    while ((f(ray, t) < 0) == initial_sign && iter_count < MAX_ITER) {
-        ++iter_count;
-        t += COARSE_DT;
-    }
+        while ((f(ray, t) < 0) == initial_sign && iter_count < MAX_ITER) {
+            ++iter_count;
+            t += COARSE_DT;
+        }
 
-    if (iter_count == MAX_ITER)
-        return std::nullopt;
+        if (iter_count == MAX_ITER)
+            return std::nullopt;
 
-    float lower_t{ t - COARSE_DT }, higher_t{ t };
-    while (higher_t - lower_t > EPS && iter_count < MAX_ITER) {
-        t = (higher_t + lower_t) / 2.;
+        float lower_t{ t - COARSE_DT }, higher_t{ t };
+        while (higher_t - lower_t > EPS && iter_count < MAX_ITER) {
+            t = (higher_t + lower_t) / 2.;
 
-        if ((f(ray, t) < 0) == initial_sign)
-            lower_t = t;
-        else
-            higher_t = t;
+            if ((f(ray, t) < 0) == initial_sign)
+                lower_t = t;
+            else
+                higher_t = t;
 
-        ++iter_count;
-    }
+            ++iter_count;
+        }
 
-    if (iter_count == MAX_ITER)
-        return std::nullopt;
+        if (iter_count == MAX_ITER)
+            return std::nullopt;
 
-    return math::Intersection{
-        .point = ray.point_at(t),
-        .obj = obj,
-        .ray = ray,
-        .distance = t
-    };
+        return math::Intersection{
+            .point = ray.point_at(t),
+            .obj = obj,
+            .ray = ray,
+            .distance = t
+        };
 	}
 }
