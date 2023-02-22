@@ -20,6 +20,8 @@ namespace math {
         
         Point& translate(const Vec& vec);
         Point translated(const Vec& vec) const;
+        Point rotation_euler(float psi, float theta, float phi) const;
+        Point rotation_euler_inv(float psi, float theta, float phi) const;
 
         Vec to_vec() const;
     };
