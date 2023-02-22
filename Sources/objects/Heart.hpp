@@ -22,7 +22,7 @@ public:
     
     std::optional<math::Intersection> intersection(const math::Ray& ray) const override ;
     
-    math::Vec get_normal_at(const math::Point& pt) const override;
+    math::Vec get_normal_at(const math::Point& N) const override;
 
 private:
     float f(const math::Point& N) const; // parametric equation

@@ -21,17 +21,20 @@ std::optional<math::Intersection> Heart::intersection(const math::Ray& ray) cons
     );
 }
 
-math::Vec Heart::get_normal_at(const math::Point& pt) const
+math::Vec Heart::get_normal_at(const math::Point& N) const
 {
     //we will compute here grad(f) at pt
+    math::Point pt=N.rotation_euler_inv(_psi,_theta,_phi); // Point tourné --> point non tourné
     const float g=(pt.x-_pos.x)*(pt.x-_pos.x)+a*(pt.z-_pos.z)*(pt.z-_pos.z)+(pt.y-_pos.y)*(pt.y-_pos.y)-d; // left part (under the cubic root)
     const float g_y3=(pt.y-_pos.y)*(pt.y-_pos.y)*(pt.y-_pos.y);
     const float df_x=3*2*(pt.x-_pos.x)*g*g-g_y3*c*2*(pt.x-_pos.x);
     const float df_y=3*2*(pt.y-_pos.y)*g*g-3*(pt.y-_pos.y)*(pt.y-_pos.y)*( c*(pt.x-_pos.x)*(pt.x-_pos.x)+b*(pt.z-_pos.z)*(pt.z-_pos.z) );
     const float df_z=3*2*a*(pt.z-_pos.z)*g*g-g_y3*b*2*(pt.z-_pos.z);
-    math::Vec n={df_x,df_y,df_z};
-    n.normalize();
-    return n;
+    math::Point m={df_x,df_y,df_z}; // calcul du vec normal pour non tourné puis je tourne le vecteur
+    math::Point n=m.rotation_euler(_psi,_theta,_phi);
+    math::Vec n_rot=n.to_vec();
+    n_rot.normalize();
+    return n_rot;
     
 }
 
