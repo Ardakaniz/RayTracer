@@ -15,14 +15,14 @@ class Box : public Object {
     
     // (x/a)^6+(y/b)^6+(z/c)^6=R_b
     
-    Box(const math::Point& pos,float a_,float b_, float c_,float R_b_,const math::Color& diffuse_color= math::WHITE);
+    Box(const math::Point& pos,float a_,float b_, float c_,float R_b_,const float psi, const float theta, const float phi,const math::Color& diffuse_color = math::WHITE);
     
     std::optional<math::Intersection> intersection(const math::Ray& ray) const override ;
     
-    math::Vec get_normal_at(const math::Point& pt) const override;
+    math::Vec get_normal_at(const math::Point& N) const override;
     
 private:
-    float f(const math::Point& M) const; // parametric equation
+    float f(const math::Point& N) const; // parametric equation
     Sphere _sphere;
     
     

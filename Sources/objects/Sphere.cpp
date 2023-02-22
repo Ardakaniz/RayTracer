@@ -5,12 +5,12 @@
 
 
 Sphere::Sphere(math::Point pos, float Radius_,const math::Color& diffuse_color) :
-Object(pos,diffuse_color),
+Object(pos,0.f,0.f,0.f,diffuse_color),
 Radius(Radius_)
 {}
 
 Sphere::Sphere(math::Point pos,math::Point B,const math::Color& diffuse_color) :
-Object(pos,diffuse_color)
+Object(pos,0.f,0.f,0.f,diffuse_color)
 {
     const math::Vec AB={B.x-pos.x,B.y-pos.y,B.z-pos.z};
     Radius=AB.length();

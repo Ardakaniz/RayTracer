@@ -1,8 +1,8 @@
 #include "objects/Heart.hpp"
 #include "objects/utils.hpp"
 
-Heart::Heart(const math::Point& pos, float a_,float b_, float c_, float d_,const math::Color& diffuse_color) :
-Object(pos,diffuse_color),
+Heart::Heart(const math::Point& pos, float a_,float b_, float c_, float d_,const float psi, const float theta, const float phi,const math::Color& diffuse_color) :
+Object(pos,psi,theta,phi,diffuse_color),
 a(a_),
 b(b_),
 c(c_),
@@ -35,8 +35,9 @@ math::Vec Heart::get_normal_at(const math::Point& pt) const
     
 }
 
-float Heart::f(const math::Point& M) const
+float Heart::f(const math::Point& N) const
 {
+    math::Point M=N.rotation_euler(_psi,_theta,_phi);
     const float left=(M.x-_pos.x)*(M.x-_pos.x)+a*(M.z-_pos.z)*(M.z-_pos.z)+(M.y-_pos.y)*(M.y-_pos.y)-d;
     const float right=(M.y-_pos.y)*(M.y-_pos.y)*(M.y-_pos.y)*(c*(M.x-_pos.x)*(M.x-_pos.x)+b*(M.z-_pos.z)*(M.z-_pos.z));
     return left*left*left-right;

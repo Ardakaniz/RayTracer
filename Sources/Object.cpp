@@ -1,8 +1,11 @@
 #include "Object.hpp"
 #include "math/Ray.hpp"
-Object::Object(const math::Point& pos, const math::Color& diffuse_color) :
+Object::Object(const math::Point& pos,const float psi, const float theta, const float phi, const math::Color& diffuse_color) :
 	_pos{ pos },
-	_diffuse_color{ diffuse_color }
+    _psi{ psi },
+    _theta{ theta },
+    _phi { phi },
+    _diffuse_color{ diffuse_color }
 { }
 
 
