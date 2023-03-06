@@ -7,6 +7,7 @@
 #include <SFML/Graphics/Image.hpp>
 
 #include <optional>
+#include <iostream>
 
 Renderer::Renderer(Scene& scene, Camera& camera) :
     _scene{ scene },
@@ -15,34 +16,35 @@ Renderer::Renderer(Scene& scene, Camera& camera) :
 { }
 
 void Renderer::render() {
+    constexpr unsigned int MAX_REFLEC = 5;
     const unsigned int width  = _camera.get_width();
     const unsigned int height = _camera.get_height();
+
+    constexpr float METALLIC_STRENGTH = 1.f; // TODO: Make this an object parameter
 
     // For each pixel...
     for (unsigned int x{ 0 }; x < width; ++x) {
         for (unsigned int y{ 0 }; y < height; ++y) {
             // We create the ray from the observer to the projection of the px (x,y) to the world
-            const math::Ray view_ray{ _camera.cast_ray(x, y) };
+            math::Ray ray{ _camera.cast_ray(x, y) };
 
             // We check if this ray intersect anything (if not, the background color will be rendered)
-            const std::optional<math::Intersection> intersec{ _scene.get_closest_intersection(view_ray) };
-            if (intersec) {
-                math::Color px_color{ math::BLACK };
-                const math::Vec normal{ intersec->obj.get_normal_at(intersec->point) };
+            const std::optional<math::Intersection> screen_intersec{ _scene.get_closest_intersection(ray) };
+            if (screen_intersec) { 
+                const math::Color px_color{ compute_color(*screen_intersec) }; 
+                math::Color reflec_color{ math::BLACK };
 
-                // If there is an intersection, we diffuse every light sources visible from the intersected object onto it 
-                for (const Light& light : _scene.get_lights()) {
-                    const math::Vec light_to_intersec{ (intersec->point - light.pos).to_vec() };
+                math::Ray reflec_ray{ ray.reflected(*screen_intersec) };
 
-                    const bool above{ normal.dot(light_to_intersec) < 0 };
-                    const bool visible{ _scene.is_visible_from(light.pos, intersec->point) };
-
-                    if (above && visible) {
-                        px_color += intersec->obj.get_diffuse_color(light, intersec->point);
+                for (unsigned int reflec_count{ 0 }; reflec_count < MAX_REFLEC; ++reflec_count) {
+                    const auto intersec{ _scene.get_closest_intersection(reflec_ray) };
+                    if (intersec) {
+                        reflec_color += compute_color(*intersec) * METALLIC_STRENGTH;
+                        reflec_ray = ray.reflected(*intersec);
                     }
                 }
-                
-                _image[x + y * width] = px_color.clamped(); // We clamp the color between 
+
+                _image[x + y * width] = (px_color + reflec_color / static_cast<float>(MAX_REFLEC)).clamped(); // We clamp the color between 0 and 1
             }
         }
     }
@@ -68,4 +70,19 @@ bool Renderer::save_to_file(const std::string& filepath) const {
     }
 
     return image.saveToFile(filepath);
+}
+
+math::Color Renderer::compute_color(const math::Intersection& intersec) const {
+    math::Color px_color{ math::BLACK };
+    const math::Vec normal{ intersec.obj.get_normal_at(intersec.point) };
+
+    // If there is an intersection, we diffuse every light sources visible from the intersected object onto it 
+    for (const Light& light : _scene.get_lights()) {
+        const math::Vec light_to_intersec{ (intersec.point - light.pos).to_vec() };
+
+        if (normal.dot(light_to_intersec) < 0 && _scene.is_visible_from(light.pos, intersec.point))
+            px_color += intersec.obj.get_diffuse_color(light, intersec.point);
+    }
+    
+    return px_color;
 }

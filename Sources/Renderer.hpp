@@ -7,6 +7,10 @@
 #include <string>
 #include <vector>
 
+namespace math {
+	struct Intesection;
+}
+
 class Renderer {
 public:
 	Renderer(Scene& scene, Camera& camera);
@@ -15,6 +19,8 @@ public:
 	bool save_to_file(const std::string& filepath) const;
 
 private:
+	math::Color compute_color(const math::Intersection& intersec) const;
+
 	Scene& _scene;
 	Camera& _camera;
 
