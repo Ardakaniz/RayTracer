@@ -2,3 +2,4 @@ obj/
 .vscode/
 raytracer
 *.png
+!examples/*.png
