@@ -7,6 +7,7 @@
 #include <SFML/Graphics/Image.hpp>
 
 #include <optional>
+#include <thread>
 #include <iostream>
 
 Renderer::Renderer(Scene& scene, Camera& camera) :
@@ -15,16 +16,16 @@ Renderer::Renderer(Scene& scene, Camera& camera) :
     _image{ _camera.get_width() * _camera.get_height(), _scene.get_background_color() }
 { }
 
-void Renderer::render() {
-    constexpr unsigned int MAX_REFLEC = 5;
+void Renderer::render(unsigned int x_start, unsigned int x_end, unsigned int y_start, unsigned int y_end) {
+    constexpr unsigned int MAX_REFLEC = 1;
     const unsigned int width  = _camera.get_width();
-    const unsigned int height = _camera.get_height();
+    //const unsigned int height = _camera.get_height();
 
-    constexpr float METALLIC_STRENGTH = 1.f; // TODO: Make this an object parameter
+    constexpr float METALLIC_STRENGTH = 0.6f; // TODO: Make this an object parameter
 
     // For each pixel...
-    for (unsigned int x{ 0 }; x < width; ++x) {
-        for (unsigned int y{ 0 }; y < height; ++y) {
+    for (unsigned int x{ x_start }; x < x_end; ++x) {
+        for (unsigned int y{ y_start }; y < y_end; ++y) {
             // We create the ray from the observer to the projection of the px (x,y) to the world
             math::Ray ray{ _camera.cast_ray(x, y) };
 
@@ -48,6 +49,29 @@ void Renderer::render() {
             }
         }
     }
+}
+
+void Renderer::render_all() {
+    render(0, _camera.get_width(), 0, _camera.get_height());
+}
+
+void Renderer::render_all_threaded() {
+    const unsigned int threads_count{ std::thread::hardware_concurrency() * 2 };
+    const unsigned int width{ _camera.get_width() };
+    const unsigned int height{ _camera.get_height() };
+
+    std::vector<std::thread> threads;
+    threads.reserve(threads_count);
+
+    for (unsigned int i{ 0 }; i < threads_count; ++i) {
+        const unsigned int x_start{ i * width / threads_count };
+        const unsigned int x_end{ (i + 1) * width / threads_count };
+
+        threads.emplace_back(&Renderer::render, this, x_start, x_end, 0, height);
+    }
+
+    for (std::thread& thread : threads)
+        thread.join();
 }
 
 bool Renderer::save_to_file(const std::string& filepath) const {

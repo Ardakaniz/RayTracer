@@ -6,7 +6,7 @@ OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 CC = g++
 FLAGS = -Wall -Wpedantic -I$(SRC_DIR)
 OUT = raytracer
-LDFLAGS = -lsfml-graphics
+LDFLAGS = -lsfml-graphics -pthread
 
 raytracer: $(OBJ_FILES)
 	$(CC) -o $@ $^ $(LDFLAGS)

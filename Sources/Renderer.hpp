@@ -15,7 +15,9 @@ class Renderer {
 public:
 	Renderer(Scene& scene, Camera& camera);
 
-	void render();
+	void render(unsigned int x_start, unsigned int x_end, unsigned int y_start, unsigned int y_end);
+	void render_all();
+	void render_all_threaded();
 	bool save_to_file(const std::string& filepath) const;
 
 private:
