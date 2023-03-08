@@ -19,7 +19,7 @@ class Box : public Object {
     
     std::optional<math::Intersection> intersection(const math::Ray& ray) const override ;
     
-    math::Vec get_normal_at(const math::Point& N) const override;
+    math::Vec get_normal_at(const math::Point& M) const override;
     
 private:
     float f(const math::Point& N) const; // parametric equation

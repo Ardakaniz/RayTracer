@@ -8,7 +8,7 @@ b(b_),
 c(c_),
 R_b(R_b_),
 
-_sphere(pos, 3.f)
+_sphere(pos, 1.8)
 {}
 
 std::optional<math::Intersection> Box::intersection(const math::Ray& ray) const {
@@ -37,9 +37,11 @@ math::Vec Box::get_normal_at(const math::Point &N) const
 
 float Box::f(const math::Point &N) const
 {
-    math::Point M=N.rotation_euler(_psi,_theta,_phi);
+    math::Point M=N.rotation_euler_inv(_psi,_theta,_phi);
     float X6=(M.x-_pos.x)*(M.x-_pos.x)*(M.x-_pos.x)*(M.x-_pos.x)*(M.x-_pos.x)*(M.x-_pos.x)/(a*a*a*a*a*a);
     float Y6=(M.y-_pos.y)*(M.y-_pos.y)*(M.y-_pos.y)*(M.y-_pos.y)*(M.y-_pos.y)*(M.y-_pos.y)/(b*b*b*b*b*b);
     float Z6=(M.z-_pos.z)*(M.z-_pos.z)*(M.z-_pos.z)*(M.z-_pos.z)*(M.z-_pos.z)*(M.z-_pos.z)/(c*c*c*c*c*c);
-    return X6+Y6+Z6-R_b;
+    M={X6,Y6,Z6};
+    M.rotation_euler(_psi,_theta,_phi);
+    return M.x+M.y+M.z-R_b;
 }
