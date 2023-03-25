@@ -13,6 +13,10 @@ namespace math {
     struct Ray;
 }
 
+namespace sf {
+    class Image;
+}
+
 class Scene {
 public:
     Scene(math::Color background_color = math::BLACK);
@@ -23,6 +27,10 @@ public:
 
     void add_light(const Light& light)
     { _lights.push_back(light); }
+
+    // /!\ No check on index
+    void set_object_texture(unsigned int index, const sf::Image& image)
+    { _objects[index]->set_texture(image); }
 
     std::optional<math::Intersection> get_closest_intersection(const math::Ray& ray) const;
     
@@ -38,9 +46,8 @@ public:
     inline const std::vector<std::unique_ptr<Object>>& get_objects() const
     { return _objects; }
 
-    std::vector<std::unique_ptr<Object>> _objects;
 private:
     const math::Color _background_color{ math::BLACK };
-
+    std::vector<std::unique_ptr<Object>> _objects;
     std::vector<Light> _lights;
 };

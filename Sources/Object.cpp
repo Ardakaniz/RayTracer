@@ -1,6 +1,8 @@
 #include "Object.hpp"
 #include "math/Ray.hpp"
 
+#include <SFML/Graphics/Image.hpp>
+
 #include <cmath>
 
 Object::Object(const math::Point& pos,const float psi, const float theta, const float phi, const math::Color& diffuse_color) :
@@ -32,5 +34,15 @@ math::Color Object::get_diffuse_color(const Light& light,const math::Point& P) c
     return Cd;
 }
 
-
-
+void Object::set_texture(const sf::Image& image)
+{
+    texture_width = image.getSize().x;
+    texture_height = image.getSize().y;
+    _texture = std::vector<math::Color>(texture_width * texture_height);
+    for (unsigned int i = 0; i < texture_width; ++i) {
+        for (unsigned int j = 0; j < texture_height; ++j) {
+            const sf::Color color = image.getPixel(i, j);
+            (*_texture)[i + j * texture_width] = math::Color{color.r / 255.f, color.g / 255.f, color.b / 255.f};
+        }
+    }
+}

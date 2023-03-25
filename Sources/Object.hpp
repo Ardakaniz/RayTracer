@@ -19,6 +19,10 @@ struct Point;
 struct Ray;
 }
 
+namespace sf {
+class Image;
+}
+
 class Object {
 public:
     Object(const math::Point& pos,const float psi, const float theta, const float phi,const math::Color& diffuse_color);
@@ -30,17 +34,20 @@ public:
 
     math::Color get_diffuse_color(const Light& light,const math::Point& P) const ;
 
-    unsigned int texture_width, texture_height;
-    std::optional<std::vector<math::Color>> _texture;
+    void set_texture(const sf::Image& image);
 
 protected:
     const math::Point _pos;
     const math::Color _diffuse_color;
+    
+    // orientation de l'objet cf angle Euler (faut faire les calculs d'intersection dans la base tournée
+    // mon idée juste tourner la surface et normal donc f(pt), grad(pt) 
     const float _psi;
     const float _theta;
     const float _phi;
-    // orientation de l'objet cf angle Euler (faut faire les calculs d'intersection dans la base tournée
-    // mon idée juste tourner la surface et normal donc f(pt), grad(pt) 
+
+    unsigned int texture_width, texture_height;
+    std::optional<std::vector<math::Color>> _texture;
 
 };
 
