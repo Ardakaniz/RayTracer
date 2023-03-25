@@ -38,9 +38,9 @@ public:
     inline const std::vector<std::unique_ptr<Object>>& get_objects() const
     { return _objects; }
 
+    std::vector<std::unique_ptr<Object>> _objects;
 private:
     const math::Color _background_color{ math::BLACK };
 
-    std::vector<std::unique_ptr<Object>> _objects;
     std::vector<Light> _lights;
 };

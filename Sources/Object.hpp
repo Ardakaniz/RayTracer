@@ -13,7 +13,7 @@
 #include "Light.hpp"
 #include "math/Intersection.hpp"
 #include <optional>
-#include <cmath>
+#include <vector>
 namespace math {
 struct Point;
 struct Ray;
@@ -26,7 +26,12 @@ public:
 
     virtual std::optional<math::Intersection>  intersection(const math::Ray& ray) const = 0;
     virtual math::Vec get_normal_at(const math::Point& pt) const  = 0 ;
+    virtual unsigned int get_uv_at(const math::Point& pt) const; //= 0;
+
     math::Color get_diffuse_color(const Light& light,const math::Point& P) const ;
+
+    unsigned int texture_width, texture_height;
+    std::optional<std::vector<math::Color>> _texture;
 
 protected:
     const math::Point _pos;
@@ -36,6 +41,7 @@ protected:
     const float _phi;
     // orientation de l'objet cf angle Euler (faut faire les calculs d'intersection dans la base tournée
     // mon idée juste tourner la surface et normal donc f(pt), grad(pt) 
+
 };
 
 #endif /* Object_hpp */

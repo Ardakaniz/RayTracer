@@ -1,7 +1,7 @@
 #include "objects/Sphere.hpp"
 #include "math/Ray.hpp"
 
-
+#include <cmath>
 
 
 Sphere::Sphere(math::Point pos, float Radius_,const math::Color& diffuse_color) :

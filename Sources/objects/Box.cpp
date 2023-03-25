@@ -7,7 +7,6 @@ a(a_),
 b(b_),
 c(c_),
 R_b(R_b_),
-
 _sphere(pos, 1.8)
 {}
 

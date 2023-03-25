@@ -4,9 +4,9 @@ SRC_FILES = $(shell find $(SRC_DIR) -type f -name '*.cpp')
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 
 CC = g++
-FLAGS = -Wall -Wpedantic -I$(SRC_DIR)
+FLAGS = -Wall -Wpedantic -I$(SRC_DIR)  -O3 -ffast-math
 OUT = raytracer
-LDFLAGS = -lsfml-graphics -pthread
+LDFLAGS = -lsfml-graphics -pthread  -O3 -ffast-math
 
 raytracer: $(OBJ_FILES)
 	$(CC) -o $@ $^ $(LDFLAGS)
