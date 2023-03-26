@@ -26,11 +26,11 @@ std::optional<math::Intersection> Box::intersection(const math::Ray& ray) const 
 math::Vec Box::get_normal_at(const math::Point &N) const
 {
     math::Point pt=(N-_pos).rotation_euler_inv(_psi,_theta,_phi);
-    //we will compute here grad(f) at pt
+    //we will compute gradf at the point pt on the surface translated into (0,0,0) and not rotated
     const float df_x=6*pt.x*pt.x*pt.x*pt.x*pt.x/(a*a*a*a*a*a);
     const float df_y=6*pt.y*pt.y*pt.y*pt.y*pt.y/(b*b*b*b*b*b);
     const float df_z=6*pt.z*pt.z*pt.z*pt.z*pt.z/(c*c*c*c*c*c);
-    math::Point m={df_x,df_y,df_z}; // calcul du vec normal pour non tourné puis je tourne le vecteur
+    math::Point m={df_x,df_y,df_z};
     math::Point n=m.rotation_euler(_psi,_theta,_phi);
     math::Vec n_rot=n.to_vec();
     n_rot.normalize();
@@ -39,6 +39,7 @@ math::Vec Box::get_normal_at(const math::Point &N) const
 
 float Box::f(const math::Point &M) const
 {
+    //function that sets the surface of the box 
     float X6=(M.x-_pos.x)*(M.x-_pos.x)*(M.x-_pos.x)*(M.x-_pos.x)*(M.x-_pos.x)*(M.x-_pos.x)/(a*a*a*a*a*a);
     float Y6=(M.y-_pos.y)*(M.y-_pos.y)*(M.y-_pos.y)*(M.y-_pos.y)*(M.y-_pos.y)*(M.y-_pos.y)/(b*b*b*b*b*b);
     float Z6=(M.z-_pos.z)*(M.z-_pos.z)*(M.z-_pos.z)*(M.z-_pos.z)*(M.z-_pos.z)*(M.z-_pos.z)/(c*c*c*c*c*c);
