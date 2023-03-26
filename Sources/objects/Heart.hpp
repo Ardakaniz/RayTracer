@@ -22,13 +22,10 @@ public:
     
     std::optional<math::Intersection> intersection(const math::Ray& ray) const override ;
     
-    math::Vec get_normal_at(const math::Point& N) const override;
+    math::Vec get_normal_at(const math::Point& M) const override;
 
 private:
     float f(const math::Point& N) const; // parametric equation
-    float f_t(const math::Ray &ray ,float t) const; //  f_t=0 equation to solve to find intersection
-    float f_tp(const math::Ray &ray,float t) const; // its derivative to compute zero with Newton algorithm
-
     Sphere _sphere;
 };
 #endif /* Heart_hpp */

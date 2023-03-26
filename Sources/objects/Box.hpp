@@ -22,7 +22,7 @@ class Box : public Object {
     math::Vec get_normal_at(const math::Point& M) const override;
     
 private:
-    float f(const math::Point& N) const; // parametric equation
+    float f(const math::Point& M) const; // parametric equation
     Sphere _sphere;
     
     
