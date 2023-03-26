@@ -31,11 +31,10 @@ public:
 protected:
     const math::Point _pos;
     const math::Color _diffuse_color;
+    // Euler angles
     const float _psi;
     const float _theta;
     const float _phi;
-    // orientation de l'objet cf angle Euler (faut faire les calculs d'intersection dans la base tournée
-    // mon idée juste tourner la surface et normal donc f(pt), grad(pt) 
 };
 
 #endif /* Object_hpp */
