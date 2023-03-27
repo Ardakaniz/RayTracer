@@ -17,7 +17,7 @@ std::optional<math::Intersection> Heart::intersection(const math::Ray& ray) cons
         ray,
         [&](const math::Ray& ray, float t) {
             const math::Point ray_pt{ ray.origin.translated(t*ray.direction) } ;
-            const math::Point pt{ (ray_pt- _pos).rotation_euler(_psi,_theta,_phi) +_pos };
+            const math::Point pt{ (ray_pt- _pos).rotation_euler_inv(_psi,_theta,_phi) +_pos };
             return f(pt);
         }
     );
