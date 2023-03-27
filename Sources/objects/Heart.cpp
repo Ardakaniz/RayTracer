@@ -25,7 +25,7 @@ std::optional<math::Intersection> Heart::intersection(const math::Ray& ray) cons
 
 math::Vec Heart::get_normal_at(const math::Point& N) const
 {
-    //we will compute gradf at the point pt on the surface translated into (0,0,0) and not rotated
+    //we will compute gradf at the point pt on the surface translated into (0,0,0) and not rotated.
     math::Point pt=(N-_pos).rotation_euler_inv(_psi,_theta,_phi);
     const float g=pt.x*pt.x+a*pt.z*pt.z+pt.y*pt.y-d;
     const float g_y3=pt.y*pt.y*pt.y;

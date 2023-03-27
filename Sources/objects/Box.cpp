@@ -26,7 +26,7 @@ std::optional<math::Intersection> Box::intersection(const math::Ray& ray) const 
 math::Vec Box::get_normal_at(const math::Point &N) const
 {
     math::Point pt=(N-_pos).rotation_euler_inv(_psi,_theta,_phi);
-    //we will compute gradf at the point pt on the surface translated into (0,0,0) and not rotated
+    //we will compute gradf at the point pt on the surface translated into (0,0,0) and not rotated.
     const float df_x=6*pt.x*pt.x*pt.x*pt.x*pt.x/(a*a*a*a*a*a);
     const float df_y=6*pt.y*pt.y*pt.y*pt.y*pt.y/(b*b*b*b*b*b);
     const float df_z=6*pt.z*pt.z*pt.z*pt.z*pt.z/(c*c*c*c*c*c);
