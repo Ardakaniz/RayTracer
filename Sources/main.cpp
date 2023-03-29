@@ -31,7 +31,7 @@ int main() {
     Renderer renderer{ scene, camera };
 
     const auto start{ std::chrono::steady_clock::now() };
-    renderer.render();
+    renderer.render_all_threaded();
     const auto end{ std::chrono::steady_clock::now() };
     std::cout << "Render took " << std::chrono::duration<float>(end - start).count() << "s." << std::endl;
 
