@@ -7,18 +7,20 @@
 #include "Renderer.hpp"
 
 #include "objects/Sphere.hpp"
+#include "objects/Box.hpp"
 #include "objects/Heart.hpp"
 
 int main() {
     Scene scene{ { .3f, .3f, .3f } };
     scene.add_object<Sphere>(math::Point{ 3.5, 0., -13.5 }, 2.f, math::GREEN);
-    scene.add_object<Heart>(math::Point{ 0., 0., -10. }, 2.f, -.1f, -1.f, 1.f, math::RED);
-    scene.add_light(Light{ math::Point{ -30., 0., 10 }, math::WHITE});
-    scene.add_light(Light{ math::Point{ 20., 0., -14 }, math::WHITE});
+    scene.add_object<Heart>(math::Point{ 0., -3., -13. }, 2.f, -.1f, -1.f, 1.f, 0.f, 0.f, 0.f, math::RED);
+    scene.add_object<Box>(math::Point{ -0.5, 3., -13.5 }, 1.f, 1.f, 1.f, 2.f, 1.f, 0.f, 0.f, math::BLUE);
+    scene.add_light(Light{ math::Point{ -30., 0., 50 }, math::WHITE * 0.5});
+    scene.add_light(Light{ math::Point{ 0., -30., 0 }, math::WHITE * 0.8});
 
     CameraParams params{ 
-        .width = 800,
-        .height = 800,
+        .width = 1000,
+        .height = 1000,
         .fov_angle = 3.141592 / 6.,
         .position = { -2., 0., 10. }
     };
